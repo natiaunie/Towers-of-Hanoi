@@ -2,7 +2,7 @@
 #define BOARD_H
 #include "Disk.h"
 #include "mystack.h"
-//#include "myqueue.h"
+#include "myqueue.h"
 #include <fstream>
 #include <cstdlib>
 
@@ -15,24 +15,22 @@ class Board
     public:
         Board(int size);
         void displayMove(Disk &d, string &s);
-        Disk createDisk(stack<Disk> &stk, stack<Disk> &temp, int size);
         void test();
-        void startGame();
-        void oddGame();
-        void evenGame();
-        void createGameArray(int s);
-        char getArrayValue(int s);
+        void startGame(char c);
 
         //Stack Functions
+        Disk createDisk(stack<Disk> &stk, stack<Disk> &temp, int size);
+        void oddGame();
+        void evenGame();
         bool checkStack(char peg);
         void moveLeft(char &c);
         void moveRight(char &c);
-        void oddMoveSequence(char pegArray[], ofstream &outfile);
         void moveDiskLeft(char pegArray[], int d);
         void moveDiskRight(char pegArray[], int d);
         void evenMoveSequence(char pegArray[], ofstream &outfile);
+        void oddMoveSequence(char pegArray[], ofstream &outfile);
 
-/*
+
         //Queue Functions
         Disk qcreateDisk(queue<Disk> &stk, queue<Disk> &temp, int size);
         void qoddGame();
@@ -40,17 +38,16 @@ class Board
         bool checkQueue(char peg);
         void qmoveLeft(char &c);
         void qmoveRight(char &c);
-        void qoddMoveSequence(char pegArray[], ofstream &outfile);
         void qmoveDiskLeft(char pegArray[], int d);
         void qmoveDiskRight(char pegArray[], int d);
         void qevenMoveSequence(char pegArray[], ofstream &outfile);
-*/
+        void qoddMoveSequence(char pegArray[], ofstream &outfile);
+
     protected:
 
     private:
         stack<Disk> start, temp, end;
-//        queue<Disk> qstart, qtemp, qend;
-        stack<int> moves;
+        queue<Disk> qstart, qtemp, qend;
         int disks, lastDisk, totalMoves;
         int parity;     // 0 for even, 1 for odd
 

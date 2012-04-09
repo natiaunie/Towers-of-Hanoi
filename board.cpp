@@ -2,7 +2,7 @@
 #include "Disk.h"
 #include <iostream>
 #include "mystack.h"
-//#include "myqueue.h"
+#include "myqueue.h"
 #include <cmath>
 #include <fstream>
 #include <cstdlib>
@@ -15,8 +15,7 @@ Board::Board(int size)
     parity = size%2;
     disks = size;
     start = temp = end;
-    createDisk(start, temp, size);
-    cout << "Stack game created." <<endl;
+    //createDisk(start, temp, size);
 }
 
 void Board::moveLeft(char &c)
@@ -89,12 +88,25 @@ void Board::test()
     moveRight(B);
 }
 
-void Board::startGame()
+void Board::startGame(char c)
 {
-    if(parity)
-        oddGame();
-    else
-        evenGame();
+    switch(c)
+    {
+        case 's':
+        case 'S': createDisk(start,end,disks);
+                  if(parity)
+                    oddGame();
+                  else
+                    evenGame();
+                  break;
+        case 'q':
+        case 'Q': qcreateDisk(qstart,qend,disks);
+                  if(parity)
+                    qoddGame();
+                  else
+                    qevenGame();
+                  break;
+    }
 }
 
 void Board::oddGame()                                   // First disk goes left
@@ -263,7 +275,7 @@ void Board::moveDiskRight(char pegArray[], int d)
 	pegArray[d] = location;
 }
 
-/*
+
 // Queue Functions
 
 Disk Board::qcreateDisk(queue<Disk> &stk, queue<Disk> &tmp, int size)
@@ -395,20 +407,19 @@ bool Board::checkQueue(char peg)
 void Board::qmoveLeft(char &c)
 {
     totalMoves++;
-
     switch(c)
     {
         case 'A': c = 'C';
-                  end.push(start.top());
-                  start.pop();
+                  qend.push(qstart.top());
+                  qstart.pop();
                   break;
         case 'B': c = 'A';
-                  start.push(temp.top());
-                  temp.pop();
+                  qstart.push(qtemp.top());
+                  qtemp.pop();
                   break;
         case 'C': c = 'B';
-                  temp.push(end.top());
-                  end.pop();
+                  qtemp.push(qend.top());
+                  qend.pop();
                   break;
     }
 }
@@ -420,16 +431,16 @@ void Board::qmoveRight(char &c)
     switch(c)
     {
         case 'A': c = 'B';
-                  temp.push(start.top());
-                  start.pop();
+                  qtemp.push(qstart.top());
+                  qstart.pop();
                   break;
         case 'B': c = 'C';
-                  end.push(temp.top());
-                  temp.pop();
+                  qend.push(qtemp.top());
+                  qtemp.pop();
                   break;
         case 'C': c = 'A';
-                  start.push(end.top());
-                  end.pop();
+                  qstart.push(qend.top());
+                  qend.pop();
                   break;
     }
 }
@@ -485,4 +496,4 @@ void Board::qmoveDiskRight(char pegArray[], int d)
 	qmoveRight(location);
 	pegArray[d] = location;
 }
-*/
+

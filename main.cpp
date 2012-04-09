@@ -23,7 +23,10 @@ int main()
 
     cin >> size;
     Board game(size);
-    game.startGame();
+    cout << "Please enter S for stack or Q for queue." <<endl;
+    char choice;
+    cin >> choice;
+    game.startGame(choice);
 
     time(&end);
     cout<< "\n\nTime elapsed: " << (double)difftime(end, start) << " seconds."<< endl;
