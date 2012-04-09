@@ -23,8 +23,8 @@ class queue
         bool find(T data);
         bool empty();
         void clear(node<T>* &ptr);
-        void push(T data);
-        void pop();
+        void enqueue(T data);
+        void dequeue();
         T top();
 
     private:
@@ -100,7 +100,7 @@ void queue<T>::clear(node<T>* &ptr)
 }
 
 template<typename T>
-void queue<T>::push(T data)
+void queue<T>::enqueue(T data)
 {
     node<T> *newBack= new node<T>;
     newBack->next = back;
@@ -120,7 +120,7 @@ void queue<T>::push(T data)
 }
 
 template<typename T>
-void queue<T>::pop()
+void queue<T>::dequeue()
 {
     if(qty > 1)
     {
@@ -141,6 +141,7 @@ void queue<T>::pop()
         delete deletethis;
         front = NULL;
         back = NULL;
+        qty--;
     }
 }
 
@@ -155,7 +156,7 @@ void queue<T>::copy(const queue<T> &other)
 {
     node<T> *tmp = other.back;
     for(; tmp != NULL; tmp = tmp->next)
-        push(tmp->data);
+        enqueue(tmp->data);
 }
 
 template<typename T>

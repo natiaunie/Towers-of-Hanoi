@@ -32,7 +32,7 @@ class Board
 
 
         //Queue Functions
-        Disk qcreateDisk(queue<Disk> &stk, queue<Disk> &temp, int size);
+        Disk qcreateDisk(queue<Disk> &stk, queue<Disk> &tmp, int size);
         void qoddGame();
         void qevenGame();
         bool checkQueue(char peg);

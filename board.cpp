@@ -15,7 +15,7 @@ Board::Board(int size)
     parity = size%2;
     disks = size;
     start = temp = end;
-    //createDisk(start, temp, size);
+    qstart = qtemp = qend;
 }
 
 void Board::moveLeft(char &c)
@@ -281,13 +281,13 @@ void Board::moveDiskRight(char pegArray[], int d)
 Disk Board::qcreateDisk(queue<Disk> &stk, queue<Disk> &tmp, int size)
 {
     Disk newDisk;
-    tmp.push(newDisk);
+    tmp.enqueue(newDisk);
     if(size > 1)
     {
         newDisk = qcreateDisk(stk,tmp,size-1);
     }
-    stk.push(tmp.top());
-    tmp.pop();
+    stk.enqueue(tmp.top());
+    tmp.dequeue();
 }
 
 void Board::qoddGame()                                   // First disk goes left
@@ -298,6 +298,7 @@ void Board::qoddGame()                                   // First disk goes left
 
     char pegArray[disks+1];
     char A = 'A';
+
     for(int i = 1; i < disks+1; i++)
     {
         pegArray[i] = A;
@@ -410,16 +411,16 @@ void Board::qmoveLeft(char &c)
     switch(c)
     {
         case 'A': c = 'C';
-                  qend.push(qstart.top());
-                  qstart.pop();
+                  qend.enqueue(qstart.top());
+                  qstart.dequeue();
                   break;
         case 'B': c = 'A';
-                  qstart.push(qtemp.top());
-                  qtemp.pop();
+                  qstart.enqueue(qtemp.top());
+                  qtemp.dequeue();
                   break;
         case 'C': c = 'B';
-                  qtemp.push(qend.top());
-                  qend.pop();
+                  qtemp.enqueue(qend.top());
+                  qend.dequeue();
                   break;
     }
 }
@@ -431,16 +432,16 @@ void Board::qmoveRight(char &c)
     switch(c)
     {
         case 'A': c = 'B';
-                  qtemp.push(qstart.top());
-                  qstart.pop();
+                  qtemp.enqueue(qstart.top());
+                  qstart.dequeue();
                   break;
         case 'B': c = 'C';
-                  qend.push(qtemp.top());
-                  qtemp.pop();
+                  qend.enqueue(qtemp.top());
+                  qtemp.dequeue();
                   break;
         case 'C': c = 'A';
-                  qstart.push(qend.top());
-                  qend.pop();
+                  qstart.enqueue(qend.top());
+                  qend.dequeue();
                   break;
     }
 }
